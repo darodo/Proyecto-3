@@ -1,39 +1,30 @@
+% Predicado principal que inicia el programa
+inicio :- menu.
+
+% Predicado que muestra el menú de opciones y recibe la elección del usuario
 menu :-
-    repeat,
-    write('Menu:'), nl,
-    write('1. Buscar producción'), nl,
-    write('2. Recomendar'), nl,
-    write('3. Registrar actividad'), nl,
-    write('0. Salir'), nl,
-    read(Opcion),
-    ejecutar_opcion(Opcion),
-    Opcion == 0, !.
+  write('Seleccione una opción:'), nl,
+  write('1. Opción 1'), nl,
+  write('2. Opción 2'), nl,
+  write('3. Salir'), nl,
+  read(Eleccion),
+  opcion(Eleccion).
 
-ejecutar_opcion(1) :-
-    buscar_produccion.
+% Predicado que se llama según la elección del usuario
+opcion(1) :-
+  write('Ha elegido la opción 1.'), nl,
+  % Aquí iría el código correspondiente a la opción 1
+  menu. % Vuelve al menú después de realizar la tarea
 
-ejecutar_opcion(2) :-
-    recomendar.
+opcion(2) :-
+  write('Ha elegido la opción 2.'), nl,
+  % Aquí iría el código correspondiente a la opción 2
+  menu. % Vuelve al menú después de realizar la tarea
 
-ejecutar_opcion(3) :-
-    registrar_actividad.
+opcion(3) :-
+  write('Saliendo del sistema.'), nl.
 
-ejecutar_opcion(0) :-
-    !.
+opcion(_) :-
+  write('Opción no válida.'), nl,
+  menu. % Vuelve al menú si la elección no es válida
 
-ejecutar_opcion(_) :-
-    write('Opción inválida. Inténtelo de nuevo.'), nl.
-
-buscar_produccion :-
-    write('Ingrese el nombre de la producción a buscar: '), nl,
-    read(Produccion),
-    % Código para buscar la producción
-    write('Resultado de la búsqueda.'), nl.
-
-recomendar :-
-    % Código para recomendar
-    write('Recomendación.'), nl.
-
-registrar_actividad :-
-    % Código para registrar actividad
-    write('Actividad registrada.'), nl.
