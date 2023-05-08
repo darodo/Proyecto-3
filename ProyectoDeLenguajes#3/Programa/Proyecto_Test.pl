@@ -1,3 +1,6 @@
+% Cargar los módulos
+:- consult('GestionPeliculas.pl').
+
 % Predicado principal que inicia el programa
 inicio :- menu_principal.
 
@@ -41,7 +44,60 @@ menu_administrativo :-
 % Predicado que se llama según la elección del usuario en el menú administrativo
 opcion_administrativo(1) :-
   write('Ha elegido la opción 1 (Gestión de películas).'), nl,
-  % Aquí iría el código correspondiente a la gestión de películas
+  menu_peliculas. % llama al menú de gestión de películas
+
+% Menú de gestión de películas
+menu_peliculas :-
+  write('Seleccione una opción:'), nl,
+  write('1. Agregar película'), nl,
+  write('2. Mostrar películas'), nl,
+  write('3. Volver al menú administrativo'), nl,
+  read(Eleccion),
+  opcion_peliculas(Eleccion).
+
+% Predicado que se llama según la elección del usuario en el menú de gestión de películas
+opcion_peliculas(1) :-
+  write('Agregar película:'), nl,
+  write('Nombre: '),
+  read(Nombre),
+  write('Género: '),
+  read(Genero),
+  validar_genero(Genero), % valida que el género sea válido
+  write('Actor principal: '),
+  read(Actor),
+  write('Director: '),
+  read(Director),
+  agregar_pelicula(Nombre, Genero, Actor, Director), % agrega la película a la base de conocimiento
+  write('La película ha sido agregada a la base de conocimiento.'), nl,
+  menu_peliculas. % vuelve al menú de gestión de películas
+
+opcion_peliculas(2) :-
+  mostrar_peliculas, % muestra todas las películas almacenadas en la base de conocimiento
+  menu_peliculas. % vuelve al menú de gestión de películas
+
+opcion_peliculas(3) :-
+  write('Volviendo al menú administrativo.'), nl,
+  menu_administrativo. % vuelve al menú administrativo
+
+% Predicado para validar que el género sea válido
+validar_genero(Genero) :-
+  genero_permitido(Genero), % comprueba si el género está permitido
+  !. % éxito si el género está permitido
+
+validar_genero(_) :-
+  write('Error: género no permitido. Los géneros permitidos son: Accion, Comedia, Drama, Fantasia, Terror, Suspenso, Musical e Historia.'), nl,
+  fail. % falla si el género no está permitido
+
+  % Predicado para comprobar si el género está permitido
+  genero_permitido(accion).
+  genero_permitido(comedia).
+  genero_permitido(drama).
+  genero_permitido(fantasia).
+  genero_permitido(terror).
+  genero_permitido(suspenso).
+  genero_permitido(musical).
+  genero_permitido(historia).
+  
   menu_administrativo. % Vuelve al menú administrativo después de realizar la tarea
 
 opcion_administrativo(2) :-
