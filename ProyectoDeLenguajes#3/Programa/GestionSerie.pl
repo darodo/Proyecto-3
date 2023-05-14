@@ -1,5 +1,3 @@
-:- dynamic serie/4.
-
 % Predicado para agregar una serie a la base de conocimiento
 agregar_serie(Nombre, Genero, Actor, Director) :-
     % Verificar que el género sea válido
