@@ -38,9 +38,25 @@ mostrar_canciones :-
         imprimir_canciones(Canciones)
     ).
 
-
 % Mostrar una lista de canciones
 imprimir_canciones([]).
-imprimir_canciones([Cancion|Canciones]) :-
-    write(Cancion), nl,
-    imprimir_canciones(Canciones).
+imprimir_canciones([cancion(Nombre_C, Genero_C, Cantante_C, Productor_C)|T]) :-
+    format("Nombre: ~w~n", [Nombre_C]),
+    format("Genero: ~w~n", [Genero_C]),
+    format("Cantante: ~w~n", [Cantante_C]),
+    format("Productor: ~w~n~n", [Productor_C]),
+    imprimir_canciones(T).
+
+% Cargar datos desde un archivo
+cargar_datos_canciones(Archivo) :-
+    consult(Archivo).
+
+% Guardar datos en un archivo
+guardar_datos_canciones(Archivo) :-
+    tell(Archivo),
+    listar_hechos_canciones,
+    told.
+
+% Regla auxiliar para listar los hechos de películas en el archivo
+listar_hechos_canciones :-
+    listing(cancion/4).

@@ -39,6 +39,23 @@ mostrar_series :-
 
 % Mostrar una lista de series
 imprimir_series([]).
-imprimir_series([Serie|Series]) :-
-    write(Serie), nl,
-    imprimir_series(Series).
+imprimir_series([serie(Nombre_S, Genero_S, Actor_S, Director_S)|T]) :-
+    format("Nombre: ~w~n", [Nombre_S]),
+    format("Genero: ~w~n", [Genero_S]),
+    format("Actor Principal: ~w~n", [Actor_S]),
+    format("Director: ~w~n~n", [Director_S]),
+    imprimir_series(T).
+
+% Cargar datos desde un archivo
+cargar_datos_series(Archivo) :-
+    consult(Archivo).
+
+% Guardar datos en un archivo
+guardar_datos_series(Archivo) :-
+    tell(Archivo),
+    listar_hechos_series,
+    told.
+
+% Regla auxiliar para listar los hechos de películas en el archivo
+listar_hechos_series :-
+    listing(serie/4).

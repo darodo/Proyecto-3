@@ -39,8 +39,29 @@ mostrar_peliculas :-
         imprimir_peliculas(Peliculas)
     ).
 
+    imprimir_generos_peliculas :-
+        write('accion, comedia, drama, fantasia, terror, suspenso, musical, historia'),nl.
+
 % Mostrar una lista de películas
+% Regla auxiliar para imprimir las películas almacenadas
 imprimir_peliculas([]).
-imprimir_peliculas([Pelicula|Peliculas]) :-
-    write(Pelicula), nl,
-    imprimir_peliculas(Peliculas).
+imprimir_peliculas([pelicula(Nombre, Genero, ActorPrincipal, Director)|T]) :-
+    format("Nombre: ~w~n", [Nombre]),
+    format("Genero: ~w~n", [Genero]),
+    format("Actor Principal: ~w~n", [ActorPrincipal]),
+    format("Director: ~w~n~n", [Director]),
+    imprimir_peliculas(T).
+
+% Cargar datos desde un archivo
+cargar_datos_peliculas(Archivo) :-
+    consult(Archivo).
+
+% Guardar datos en un archivo
+guardar_datos_peliculas(Archivo) :-
+    tell(Archivo),
+    listar_hechos_peliculas,
+    told.
+
+% Regla auxiliar para listar los hechos de películas en el archivo
+listar_hechos_peliculas :-
+    listing(pelicula/4).
